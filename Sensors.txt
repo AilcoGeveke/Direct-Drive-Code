@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 - Druksensor FSR402
 - Encoder EC12E2420404
+=======
+- FSR402 http://www.trossenrobotics.com/productdocs/2010-10-26-DataSheet-FSR402-Layout2.pdf
+- EC12E2420404 
+>>>>>>> origin/master
