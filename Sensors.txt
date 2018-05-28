@@ -1,2 +1,2 @@
-- FSR402
-- EC12E2420404
+- Druksensor FSR402
+- Encoder EC12E2420404
