@@ -25,7 +25,18 @@ void loop() {
 }
 
 void readValues();
+{
+  //Druksensors + Encoder
+  //Code is voor het grootste gedeelte al geschreven
+  //
+}
+
 void calculateHoek();
+{
+//Berekenen van Hoeksnelheid & Hoekversnelling
+ 
+}
+
 void calculateKoppel();
 void calculateMassatraagheid();
 void calculateKlemspanning();
