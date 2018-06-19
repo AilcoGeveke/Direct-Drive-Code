@@ -2,7 +2,7 @@ const double motorConstante = 0.5424;
 const double mechanischeConstante = 0.222;
 
 double pi = 3.14.....;
-double hoekVersnelling;
+double hoekversnelling;
 double hoeksnelheid;
 double koppelTrapperL;
 double koppelTrapperR;
@@ -33,11 +33,20 @@ void readValues();
 
 void calculateHoek();
 {
-//Berekenen van Hoeksnelheid & Hoekversnelling
- 
+  //Berekenen van Hoeksnelheid & Hoekversnelling
+
 }
 
 void calculateKoppel();
-void calculateMassatraagheid();
-void calculateKlemspanning();
+{
+}
 
+void calculateMassatraagheid(); //T = Iα
+{
+    
+}
+
+void calculateKlemspanning();
+{
+
+}
