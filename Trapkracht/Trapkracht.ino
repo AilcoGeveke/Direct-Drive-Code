@@ -1,19 +1,15 @@
 #include <elapsedMillis.h>
 
 elapsedMillis timeElapsed;
-int fsrPin1 = 0;
-int fsrPin2 = 1;
-int DrukSensor1;
-int DrukSensor2;
-float Voltage1;
-float Voltage2;
-float fsrResistance;
-float fsrConductance;
+const int fsrPin1 = 2;
+const int fsrPin2 = 3;
+int DrukSensor1, DrukSensor2;
+float Voltage1, Voltage2;
 float nettoTijd, vorigeTijd = 0;
 float f, w, vorigeW, a = 0; //f=freq,w=hoeksnelheid,a=hoekversnelling
 
-int encoderPinA = 3;
-int encoderPinB = 4;
+const int encoderPinA = 5;
+const int encoderPinB = 4;
 float encoderPos = -0.08333;
 int encoderPinALast = LOW;
 int n = LOW;
@@ -30,11 +26,11 @@ void setup() {
 }
 
 void loop() {
-  traphoek();
+  mainProgram();
 }
 
 
-void traphoek() {
+void mainProgram() {
   n = digitalRead(encoderPinA);
   if ((encoderPinALast == LOW) && (n == HIGH)) {
     if (digitalRead(encoderPinB) == HIGH) {
@@ -54,6 +50,8 @@ void traphoek() {
   }
   delay(10);
   encoderPinALast = n;
+
+  
 }
 
 void arbeid() {
@@ -63,42 +61,26 @@ void arbeid() {
   Voltage2 = map(DrukSensor2, 0, 1023, 0, 5000);      //
 
   //Formule y = 34331050 + (2.047047 - 34331050)/(1 + (x/162446.1)^3.412111)
-  fsrResistance = 5000 - Voltage1;                    
-  fsrResistance *= 10000;
-  fsrResistance /= Voltage1;
-  fsrConductance = 1000000;
-  fsrConductance /= fsrResistance;
+  if (Voltage1 != 0)
+    N1 = 34331050 + (2.047047 - 34331050) / (1 + (pow((Voltage1 / 162446.1), 3.412111)));
+  else
+    N1 = 0;
+  Serial.print("NewtonForce1:");
+  Serial.print(N1);
+  Serial.println(" N");
 
-//If-Else loop om kracht op eerste trapper te berekenen
-  if (fsrConductance <= 1000) {
-    N1 = fsrConductance / 80;
-  } else {
-    N1 = fsrConductance - 1000;
-    N1 /= 30;
-  }
-  Serial.print("N1:");
-  Serial.println(N1);
-  fsrResistance = 5000 - Voltage2;
-  fsrResistance *= 10000;
-  fsrResistance /= Voltage2;
-  fsrConductance = 1000000;
-  fsrConductance /= fsrResistance;
+  if (Voltage2 != 0)
+    N2 = 34331050 + (2.047047 - 34331050) / (1 + (pow((Voltage1 / 162446.1), 3.412111)));
+  else
+    N2 = 0;
+  Serial.print("NewtonForce2:");
+  Serial.print(N2);
+  Serial.println(" N");
 
-  //If-Else loop om kracht op tweede trapper te berekenen
-  if (fsrConductance <= 1000) {
-    N2 = fsrConductance / 80;
-  } else {
-    N2 = fsrConductance - 1000;
-    N2 /= 30;
-  }
-  
   W = N1 * arm * cos(encoderPos * PI) + N2 * arm * cos((1 + encoderPos) * PI);
+  Serial.print("Arbeid:");
   Serial.print(W);
   Serial.println("Nm");
-  //Serial.print("N1: ");
-  //Serial.println(N1);
-  //Serial.print("N2: ");
-  //Serial.println(N2);
 }
 
 void hoeksnelheid()
@@ -117,5 +99,5 @@ void hoeksnelheid()
   a = w - vorigeW / nettoTijd;
   vorigeW = w;
 
-  
+
 }
