@@ -98,6 +98,4 @@ void hoeksnelheid()
 
   a = w - vorigeW / nettoTijd;
   vorigeW = w;
-
-
 }
