@@ -177,7 +177,7 @@ void berekenKlemspanning() {
   else
     klemspanning =  ((ankerweerstand / motorConstante) * (gewensteA * Jmotor + vermogenMotor / w) + mechanischeConstante * w);
 
-  if (w < 0.6)
+  if (w < 1.2)
     klemspanning = 0;
   Serial.print("Klemspanning:");
   Serial.print(klemspanning);
